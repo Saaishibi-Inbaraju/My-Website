@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Saai Shibi Inbaraju — HPDC Process Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --steel:    #1C2B3A;
+    --molten:   #E84B1C;
+    --cast:     #B8CDDA;
+    --slag:     #7A9BAD;
+    --white:    #F5F8FA;
+    --offwhite: #EDF1F4;
+    --mono:     'IBM Plex Mono', monospace;
+    --body:     'Inter', sans-serif;
+    --display:  'Playfair Display', serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--body);
+    background: var(--white);
+    color: var(--steel);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 60px;
+    background: rgba(28,43,58,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(232,75,28,0.3);
+  }
+  .nav-logo {
+    font-family: var(--mono); font-size: 13px; font-weight: 600;
+    color: var(--molten); letter-spacing: 0.08em;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-size: 12px; font-weight: 500; color: var(--cast);
+    text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--molten); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--steel);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 100px 80px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 70% 50%, rgba(232,75,28,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 50% at 20% 80%, rgba(184,205,218,0.06) 0%, transparent 60%);
+  }
+  /* Molten drip — signature element */
+  .hero::after {
+    content: '';
+    position: absolute;
+    right: 48%; top: 0;
+    width: 2px; height: 100%;
+    background: linear-gradient(to bottom, transparent 0%, var(--molten) 30%, rgba(232,75,28,0.4) 80%, transparent 100%);
+  }
+  .hero-left { position: relative; z-index: 1; }
+  .hero-eyebrow {
+    font-family: var(--mono); font-size: 11px; font-weight: 600;
+    color: var(--molten); letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: inline-block;
+    width: 30px; height: 1px; background: var(--molten);
+  }
+  .hero-name {
+    font-family: var(--display);
+    font-size: clamp(42px, 5vw, 64px);
+    font-weight: 900; line-height: 1.05;
+    color: var(--white); margin-bottom: 10px;
+  }
+  .hero-name span { color: var(--molten); }
+  .hero-title {
+    font-size: 15px; font-weight: 300; color: var(--cast);
+    letter-spacing: 0.04em; margin-bottom: 32px; line-height: 1.8;
+  }
+  .hero-summary {
+    font-size: 15px; font-weight: 400; color: rgba(245,248,250,0.75);
+    max-width: 460px; line-height: 1.75; margin-bottom: 40px;
+  }
+  .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 26px; border-radius: 3px;
+    font-size: 13px; font-weight: 600; text-decoration: none;
+    letter-spacing: 0.04em; transition: all 0.2s; cursor: pointer; border: none;
+  }
+  .btn-primary { background: var(--molten); color: white; }
+  .btn-primary:hover { background: #d03d12; transform: translateY(-1px); }
+  .btn-outline { background: transparent; color: var(--cast); border: 1px solid rgba(184,205,218,0.4); }
+  .btn-outline:hover { border-color: var(--cast); color: white; }
+
+  .hero-right {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; gap: 16px;
+    padding-left: 60px;
+  }
+  .stat-card {
+    background: rgba(245,248,250,0.04);
+    border: 1px solid rgba(184,205,218,0.15);
+    border-left: 3px solid var(--molten);
+    padding: 18px 22px; border-radius: 4px;
+  }
+  .stat-num {
+    font-family: var(--mono); font-size: 28px; font-weight: 600;
+    color: var(--white); line-height: 1;
+  }
+  .stat-num span { font-size: 14px; color: var(--molten); }
+  .stat-label { font-size: 12px; color: var(--slag); margin-top: 4px; }
+
+  /* ── SECTIONS ── */
+  section { padding: 80px 80px; }
+  .section-eyebrow {
+    font-family: var(--mono); font-size: 11px; font-weight: 600;
+    color: var(--molten); letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 10px; display: flex; align-items: center; gap: 10px;
+  }
+  .section-eyebrow::before {
+    content: ''; width: 24px; height: 1px; background: var(--molten);
+  }
+  .section-title {
+    font-family: var(--display); font-size: clamp(28px, 3vw, 40px);
+    font-weight: 700; color: var(--steel); margin-bottom: 48px; line-height: 1.15;
+  }
+
+  /* ── PROJECTS ── */
+  #projects { background: var(--steel); }
+  #projects .section-title { color: var(--white); }
+  #projects .section-eyebrow { color: var(--molten); }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+  .project-card {
+    background: rgba(245,248,250,0.04);
+    border: 1px solid rgba(184,205,218,0.12);
+    border-radius: 6px; padding: 28px;
+    transition: border-color 0.25s, transform 0.25s;
+    position: relative; overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--molten), transparent);
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .project-card:hover { border-color: rgba(232,75,28,0.4); transform: translateY(-3px); }
+  .project-card:hover::before { opacity: 1; }
+  .project-tag {
+    display: inline-block;
+    font-family: var(--mono); font-size: 10px; font-weight: 600;
+    color: var(--molten); letter-spacing: 0.1em; text-transform: uppercase;
+    background: rgba(232,75,28,0.12); border-radius: 2px;
+    padding: 3px 8px; margin-bottom: 14px;
+  }
+  .project-title {
+    font-size: 16px; font-weight: 700; color: var(--white);
+    margin-bottom: 10px; line-height: 1.35;
+  }
+  .project-desc {
+    font-size: 13.5px; color: rgba(245,248,250,0.6);
+    line-height: 1.7; margin-bottom: 18px;
+  }
+  .project-metrics { display: flex; flex-direction: column; gap: 8px; }
+  .metric {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; color: var(--cast);
+  }
+  .metric-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--molten); flex-shrink: 0;
+  }
+  .metric strong { color: #7DF9AA; font-weight: 600; }
+
+  /* ── COST SAVINGS (GPL Projects) ── */
+  #savings { background: var(--offwhite); }
+  .savings-header {
+    display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 40px;
+  }
+  .savings-kpi {
+    flex: 1; min-width: 160px;
+    background: var(--steel); color: var(--white);
+    border-radius: 6px; padding: 22px 24px;
+  }
+  .savings-kpi .kpi-val {
+    font-family: var(--mono); font-size: 26px; font-weight: 600; color: var(--molten);
+  }
+  .savings-kpi .kpi-label { font-size: 12px; color: var(--cast); margin-top: 4px; }
+
+  .savings-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .savings-table thead tr { background: var(--steel); color: var(--white); }
+  .savings-table th { padding: 12px 16px; text-align: left; font-weight: 600;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .savings-table td { padding: 13px 16px; border-bottom: 1px solid rgba(28,43,58,0.1); vertical-align: top; }
+  .savings-table tbody tr:hover { background: rgba(232,75,28,0.04); }
+  .status-badge {
+    display: inline-block; padding: 2px 8px; border-radius: 10px;
+    font-size: 11px; font-weight: 600;
+  }
+  .status-validated { background: #d1f5e0; color: #1a7a40; }
+  .status-running   { background: #dceeff; color: #1a4fa8; }
+  .status-pilot     { background: #fff3d6; color: #a06800; }
+  .status-trial     { background: #f5e0ff; color: #6b00a8; }
+
+  /* ── EXPERIENCE ── */
+  #experience { background: var(--white); }
+  .timeline { display: flex; flex-direction: column; gap: 0; position: relative; }
+  .timeline::before {
+    content: ''; position: absolute; left: 150px; top: 0; bottom: 0;
+    width: 1px; background: rgba(28,43,58,0.12);
+  }
+  .tl-item { display: flex; gap: 0; margin-bottom: 40px; position: relative; }
+  .tl-period {
+    min-width: 130px; padding-right: 30px; text-align: right;
+    padding-top: 4px;
+  }
+  .tl-period span {
+    font-family: var(--mono); font-size: 11px; color: var(--slag);
+    white-space: nowrap;
+  }
+  .tl-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--molten); flex-shrink: 0;
+    margin-top: 6px; margin-left: -6px; margin-right: 24px;
+    box-shadow: 0 0 0 3px rgba(232,75,28,0.2);
+  }
+  .tl-content { flex: 1; }
+  .tl-role { font-size: 16px; font-weight: 700; color: var(--steel); margin-bottom: 2px; }
+  .tl-company { font-size: 13px; font-weight: 500; color: var(--molten); margin-bottom: 10px; }
+  .tl-bullets { list-style: none; padding: 0; }
+  .tl-bullets li {
+    font-size: 13.5px; color: #3d5266; line-height: 1.65;
+    padding: 4px 0 4px 16px; position: relative;
+  }
+  .tl-bullets li::before {
+    content: '→'; position: absolute; left: 0;
+    color: var(--molten); font-size: 11px; top: 6px;
+  }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--steel); }
+  #skills .section-title { color: var(--white); }
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .skill-group { }
+  .skill-group-title {
+    font-family: var(--mono); font-size: 11px; font-weight: 600;
+    color: var(--molten); letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 14px; padding-bottom: 8px;
+    border-bottom: 1px solid rgba(232,75,28,0.3);
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tag {
+    background: rgba(245,248,250,0.07);
+    border: 1px solid rgba(184,205,218,0.15);
+    color: var(--cast); font-size: 12.5px; font-weight: 400;
+    padding: 5px 12px; border-radius: 3px;
+  }
+  .skill-tag.hot {
+    background: rgba(232,75,28,0.15);
+    border-color: rgba(232,75,28,0.3);
+    color: #f5a08a;
+  }
+
+  /* ── CERTIFICATIONS ── */
+  #certs { background: var(--offwhite); }
+  .certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .cert-card {
+    background: var(--white); border: 1px solid rgba(28,43,58,0.1);
+    border-radius: 6px; padding: 20px 22px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .cert-icon {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: rgba(232,75,28,0.1); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .cert-name { font-size: 14px; font-weight: 600; color: var(--steel); margin-bottom: 4px; }
+  .cert-org  { font-size: 12px; color: var(--slag); }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--steel); text-align: center; padding: 80px 40px; }
+  #contact .section-eyebrow { justify-content: center; }
+  #contact .section-eyebrow::before { display: none; }
+  #contact .section-title { color: var(--white); }
+  .contact-links { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-top: 32px; }
+  .contact-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 28px; border-radius: 3px;
+    font-size: 13px; font-weight: 600; text-decoration: none;
+    letter-spacing: 0.04em; transition: all 0.2s;
+  }
+  .contact-link-primary { background: var(--molten); color: white; }
+  .contact-link-primary:hover { background: #d03d12; }
+  .contact-link-outline { border: 1px solid rgba(184,205,218,0.3); color: var(--cast); }
+  .contact-link-outline:hover { border-color: var(--cast); color: white; }
+
+  footer {
+    background: #111c26; color: var(--slag);
+    text-align: center; padding: 20px;
+    font-family: var(--mono); font-size: 11px;
+  }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding: 100px 28px 60px; gap: 40px; }
+    .hero::after { display: none; }
+    .hero-right { padding-left: 0; }
+    section { padding: 60px 28px; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .timeline::before { left: 0; }
+    .tl-period { display: none; }
+    nav { padding: 0 20px; }
+    .nav-links { gap: 16px; }
+  }
+  @media (max-width: 600px) {
+    .skills-grid { grid-template-columns: 1fr; }
+    .hero-name { font-size: 36px; }
+    .nav-links li:not(:nth-child(-n+3)) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SSI // HPDC Engineer</div>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#savings">Impact</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <div class="hero-eyebrow">HPDC Process Engineer</div>
+    <h1 class="hero-name">Saai Shibi<br/><span>Inbaraju</span></h1>
+    <p class="hero-title">
+      High Pressure Die Casting  ·  Automation  ·  Lean Manufacturing<br/>
+      Coimbatore, India  ·  Open to UK / Europe / USA
+    </p>
+    <p class="hero-summary">
+      6+ years engineering aluminium die casting operations for Tier 1 automotive suppliers.
+      Specialised in cycle-time reduction, rejection elimination, robot programming,
+      and building systems that hold their gains.
+    </p>
+    <div class="hero-cta">
+      <a href="https://www.linkedin.com/in/saaishibi/" target="_blank" class="btn btn-primary">LinkedIn Profile</a>
+      <a href="mailto:sakthi512628@gmail.com" class="btn btn-outline">sakthi512628@gmail.com</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="stat-card">
+      <div class="stat-num">6<span>+ yrs</span></div>
+      <div class="stat-label">HPDC Process Engineering experience</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">Rs 6.3<span>L/yr</span></div>
+      <div class="stat-label">Validated annual savings — G Plast CI portfolio</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">28<span>% → 3%</span></div>
+      <div class="stat-label">Rejection rate reduction (peak achievement)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">105<span>s → 82s</span></div>
+      <div class="stat-label">Cycle time reduction via ABB robot spray optimisation</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">3<span> OEMs</span></div>
+      <div class="stat-label">Sundaram Clayton · Roots Cast · G Plast</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-eyebrow">Engineering Projects</div>
+  <h2 class="section-title">Process Improvement Highlights</h2>
+
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <span class="project-tag">ABB Robotics · SCL</span>
+      <div class="project-title">ABB Spray Robot Cycle Time Reduction — 1400T HPDC</div>
+      <p class="project-desc">Programmed ABB extraction and spray robots on a 1400T HPDC cell. Optimised spray sequence, nozzle activation timing, and air-blow parameters to dramatically cut non-cutting time.</p>
+      <div class="project-metrics">
+        <div class="metric"><div class="metric-dot"></div>Spray cycle: 45s → <strong>22s</strong> (51% reduction)</div>
+        <div class="metric"><div class="metric-dot"></div>Overall cycle: 105s → <strong>82s</strong></div>
+        <div class="metric"><div class="metric-dot"></div>Throughput: <strong>+12 parts/hr</strong></div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <span class="project-tag">FANUC Robotics · G Plast</span>
+      <div class="project-title">Dual-Arm FANUC Robot Integration — 400T HPDC</div>
+      <p class="project-desc">Led deployment of a dual-arm FANUC robotic system enabling simultaneous casting extraction and die spraying, eliminating sequential robot moves and reducing dead time.</p>
+      <div class="project-metrics">
+        <div class="metric"><div class="metric-dot"></div>Cycle time: 80s → <strong>60s</strong> (25% reduction)</div>
+        <div class="metric"><div class="metric-dot"></div>Throughput: 45 → <strong>60 shots/hr</strong></div>
+        <div class="metric"><div class="metric-dot"></div>System: Extraction + spray <strong>simultaneous</strong></div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <span class="project-tag">Die Casting · G Plast</span>
+      <div class="project-title">Gas Porosity Elimination via Venting Redesign</div>
+      <p class="project-desc">Worked with die makers to redesign overflow and venting systems using X-ray defect analysis and MAGMASOFT simulation. Identified gas entrapment paths and redesigned runner layout.</p>
+      <div class="project-metrics">
+        <div class="metric"><div class="metric-dot"></div>Gas porosity: 9% → <strong>&lt;2%</strong></div>
+        <div class="metric"><div class="metric-dot"></div>Casting yield: improved to <strong>98%</strong></div>
+        <div class="metric"><div class="metric-dot"></div>Tool: X-ray + MAGMASOFT simulation</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <span class="project-tag">NPD · Roots Cast</span>
+      <div class="project-title">Thermostat Housing — First-Run PPAP on 660T Machine</div>
+      <p class="project-desc">Led full process development of a new aluminium thermostat housing die. Established shot profile, metal velocity, intensification pressure, and thermal balance parameters from scratch.</p>
+      <div class="project-metrics">
+        <div class="metric"><div class="metric-dot"></div>PPAP achieved on <strong>first production run</strong></div>
+        <div class="metric"><div class="metric-dot"></div>Cycle time: 80s → <strong>64s</strong> (thermal balance + spray mod)</div>
+        <div class="metric"><div class="metric-dot"></div>Launch defects reduced <strong>60%</strong> vs prior programmes</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <span class="project-tag">Quality · SCL / Roots Cast</span>
+      <div class="project-title">Aerospace Casting — Cold Shut Elimination</div>
+      <p class="project-desc">Investigated persistent cold shut defects in a 1.5mm thin-wall aerospace casting. Applied DOE to test gate velocity impact. Raised gate velocity by 2× and validated through X-ray analysis.</p>
+      <div class="project-metrics">
+        <div class="metric"><div class="metric-dot"></div>Gate velocity: 29 m/s → <strong>58 m/s</strong></div>
+        <div class="metric"><div class="metric-dot"></div>Cold shut rejection: 18% → <strong>&lt;1%</strong></div>
+        <div class="metric"><div class="metric-dot"></div>Method: DOE + X-ray + metallurgical analysis</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <span class="project-tag">Automation · SCL</span>
+      <div class="project-title">Robotic Trimming Interlock — Manpower Elimination</div>
+      <p class="project-desc">Programmed ABB robot to interlock with the trimming machine, enabling fully automated part transfer from die to trim press with no manual intervention. Eliminated a manual operator role.</p>
+      <div class="project-metrics">
+        <div class="metric"><div class="metric-dot"></div><strong>1 operator eliminated</strong> per shift</div>
+        <div class="metric"><div class="metric-dot"></div>Safety improved — hands out of trim press zone</div>
+        <div class="metric"><div class="metric-dot"></div>ABB RAPID programming + I/O interlock</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <span class="project-tag">Robotics · SCL</span>
+      <div class="project-title">Double-Arm Robot Deployment — Horizontal Rollout</div>
+      <p class="project-desc">2-year project implementing double-arm robots (extraction + spray) across same-tonnage machines. Optimised home positions, part sensor placement, and path planning for minimum cycle time.</p>
+      <div class="project-metrics">
+        <div class="metric"><div class="metric-dot"></div>Deployed across <strong>multiple machine cells</strong></div>
+        <div class="metric"><div class="metric-dot"></div>Consistent cycle reduction per machine</div>
+        <div class="metric"><div class="metric-dot"></div>Robots: ABB (RAPID) + Bühler integrated</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <span class="project-tag">Safety · G Plast</span>
+      <div class="project-title">Poka-Yoke Cutting Fixture — Degating Safety</div>
+      <p class="project-desc">Replaced a high-risk manual bandsaw degating operation for an Ather housing casting with a purpose-built poka-yoke fixture. Eliminated injury risk with a Rs 15,000 investment.</p>
+      <div class="project-metrics">
+        <div class="metric"><div class="metric-dot"></div>Investment: <strong>Rs 15,000</strong></div>
+        <div class="metric"><div class="metric-dot"></div><strong>Zero incidents</strong> in 3+ months running</div>
+        <div class="metric"><div class="metric-dot"></div>High-risk manual operation fully <strong>eliminated</strong></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SAVINGS / CI PORTFOLIO -->
+<section id="savings">
+  <div class="section-eyebrow">G Plast — CI Portfolio</div>
+  <h2 class="section-title">Continuous Improvement — Validated Financial Impact</h2>
+
+  <div class="savings-header">
+    <div class="savings-kpi">
+      <div class="kpi-val">Rs 6.32L</div>
+      <div class="kpi-label">Confirmed savings/year — 3 validated projects</div>
+    </div>
+    <div class="savings-kpi">
+      <div class="kpi-val">Rs 3.92L</div>
+      <div class="kpi-label">One-time saving — transfer ladle VAVE (pending validation)</div>
+    </div>
+    <div class="savings-kpi">
+      <div class="kpi-val">Rs 2.7–4.7L</div>
+      <div class="kpi-label">Additional potential — thermocouple scale-up to 15 machines</div>
+    </div>
+    <div class="savings-kpi">
+      <div class="kpi-val">450 sq.ft.</div>
+      <div class="kpi-label">Floor space freed via JIT material pull system</div>
+    </div>
+  </div>
+
+  <table class="savings-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Project</th>
+        <th>Action Taken</th>
+        <th>Key Metric</th>
+        <th>Impact</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td><strong>Coverall Powder Substitution</strong></td>
+        <td>Switched flux: Foseco GR520 → Ceraflux GR520</td>
+        <td>Rs 140/kg → Rs 90/kg · 400 kg/month</td>
+        <td><strong>Rs 2.4L/year saved</strong> (35.7% cost cut)</td>
+        <td><span class="status-badge status-validated">Validated — 5 months</span></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><strong>JIT Raw Material Procurement</strong></td>
+        <td>Daily Al pull = machine output × 85% utilisation tracking system</td>
+        <td>Material pull: 8–10T/day → 6–7T/day · WIP: 16.5T → 14T</td>
+        <td>450 sq.ft. freed · improved 5S &amp; consumable control</td>
+        <td><span class="status-badge status-running">Running — 8 months</span></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><strong>Crucible Vendor Change (VAVE)</strong></td>
+        <td>BMC Morganite → ABS Associates (Zircar PLATINUM)</td>
+        <td>Rs 2.51L → Rs 2.05L per 3-set order · Scorecard: 6.13 → 8.08/10</td>
+        <td><strong>Rs 1.82L/year saved</strong> (18.2% cut)</td>
+        <td><span class="status-badge status-validated">Finalised — vendor switched</span></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td><strong>Manpower Optimisation — Melting</strong></td>
+        <td>Time-motion study; rebalanced workload across 3 melting furnaces</td>
+        <td>Operators: 2 → 1 · Output: 3,500 kg/day maintained</td>
+        <td><strong>50% headcount reduction · ~Rs 2.1L/year</strong> saving</td>
+        <td><span class="status-badge status-running">Ongoing — running</span></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td><strong>Transfer Ladle Supplier Change (VAVE)</strong></td>
+        <td>Furnteck (Pune) → Godwell (Coimbatore) local sourcing</td>
+        <td>Landed cost: Rs 5.84L → Rs 1.92L · Delivery: 6–8 wks → 5–6 wks</td>
+        <td><strong>Rs 3.92L saved</strong> on trial unit (67% cut)</td>
+        <td><span class="status-badge status-trial">Trial — validation in progress</span></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td><strong>Thermocouple Upgrade Pilot</strong></td>
+        <td>Blue Pyro sheath thermocouple pilot on 1 of 15 furnaces</td>
+        <td>Life: 1–1.5 mo → 4+ months (running) · Cost: Rs 5,500 → Rs 11,500</td>
+        <td><strong>Rs 2.7–4.7L/yr potential</strong> if scaled to 15 machines</td>
+        <td><span class="status-badge status-pilot">Pilot — since Feb 2026</span></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td><strong>Safety Cutting Fixture (Poka-Yoke)</strong></td>
+        <td>Replaced manual bandsaw degating — Ather housing part</td>
+        <td>Investment: Rs 15,000 · High-risk operation eliminated</td>
+        <td><strong>Zero incidents</strong> · Built-in error-proofing</td>
+        <td><span class="status-badge status-validated">Running — 3 months</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-eyebrow">Career Timeline</div>
+  <h2 class="section-title">Work Experience</h2>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-period"><span>Jun 2025<br/>– Present</span></div>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-role">Manufacturing / Process Engineer</div>
+        <div class="tl-company">G Plast Private Limited, Coimbatore</div>
+        <ul class="tl-bullets">
+          <li>Managing automotive HPDC manufacturing operations — BOP, control plans, quality standards.</li>
+          <li>Supervising 25–40 operators across rotating shifts.</li>
+          <li>Led dual-arm FANUC robot deployment on 400T machine → 80s to 60s cycle, 45 to 60 shots/hr.</li>
+          <li>Redesigned overflow and venting systems based on X-ray analysis → gas porosity 9% to &lt;2%, yield 98%.</li>
+          <li>Delivered 7 CI projects — Rs 6.32L/yr validated savings across melting and procurement operations.</li>
+          <li>Supporting APQP, PFMEA updates, SOP creation, and process validation activities.</li>
+          <li>Conducting Tier 3 meetings for rejection reduction with structured action plans.</li>
+          <li>Weekly MRB meetings to disposition in-house rejections vs customer fitness for use.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-period"><span>Jul 2023<br/>– May 2025</span></div>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-role">Manufacturing / Process Engineer</div>
+        <div class="tl-company">Roots Cast Private Limited</div>
+        <ul class="tl-bullets">
+          <li>Supported automotive NPD programs from trial to mass production using APQP methodology.</li>
+          <li>Led process development of new aluminium thermostat housing on 660T — PPAP approved first run.</li>
+          <li>Supported 5+ new HPDC die industrialisations from tool trial; 60% reduction in launch defects.</li>
+          <li>Conducted DOE studies, X-ray, metallurgical, and defect analysis for process capability.</li>
+          <li>Developed and updated PFMEA, Control Plans, SOPs, and process documentation.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-period"><span>Jul 2016<br/>– Nov 2019</span></div>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-role">Production / Process Engineer</div>
+        <div class="tl-company">Sundaram Clayton Limited (TVS Group)</div>
+        <ul class="tl-bullets">
+          <li>Managed PQCDMS for 1350T and 1400T HPDC machines.</li>
+          <li>Programmed ABB robots — reduced spray cycle from 45s to 22s, overall 105s to 82s (+12 parts/hr).</li>
+          <li>Reduced die trial iterations from 8 to 4 through data-driven root cause analysis.</li>
+          <li>Introduced robotic quenching and air-cleaning systems through equipment design.</li>
+          <li>Eliminated cold shut defects in aerospace casting via gate velocity DOE (18% → &lt;1%).</li>
+          <li>Led double-arm robot deployment program — horizontally deployed across same-tonnage cells.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-eyebrow">Technical Proficiency</div>
+  <h2 class="section-title">Skills & Tools</h2>
+
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-title">HPDC / Die Casting</div>
+      <div class="skill-tags">
+        <span class="skill-tag hot">HPDC Process Optimisation</span>
+        <span class="skill-tag hot">Die Design Review</span>
+        <span class="skill-tag hot">Tooling & Die Maintenance</span>
+        <span class="skill-tag">Shot Profile Development</span>
+        <span class="skill-tag">Intensification Pressure</span>
+        <span class="skill-tag">Thermal Balance</span>
+        <span class="skill-tag">Venting & Overflow Design</span>
+        <span class="skill-tag">Structural Al Castings</span>
+        <span class="skill-tag">Defect Analysis (X-Ray)</span>
+        <span class="skill-tag">Metallurgical Analysis</span>
+        <span class="skill-tag">DFM</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Automation & Robotics</div>
+      <div class="skill-tags">
+        <span class="skill-tag hot">ABB Robot Programming (RAPID)</span>
+        <span class="skill-tag hot">FANUC Robot Programming (TP)</span>
+        <span class="skill-tag hot">Bühler Robot Systems</span>
+        <span class="skill-tag">Yaskawa</span>
+        <span class="skill-tag">Die Spray Optimisation</span>
+        <span class="skill-tag">Extraction Robot Programming</span>
+        <span class="skill-tag">Ladle Robot Systems</span>
+        <span class="skill-tag">Robot Interlock / I/O</span>
+        <span class="skill-tag">MAGMASOFT</span>
+        <span class="skill-tag">FLOW-3D</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Quality & Lean</div>
+      <div class="skill-tags">
+        <span class="skill-tag hot">APQP / PPAP</span>
+        <span class="skill-tag hot">PFMEA / Control Plans</span>
+        <span class="skill-tag">DOE</span>
+        <span class="skill-tag">5 Why / 8D / Fishbone</span>
+        <span class="skill-tag">OEE / TPM</span>
+        <span class="skill-tag">5S / Kaizen</span>
+        <span class="skill-tag">SOP Creation</span>
+        <span class="skill-tag">MRB / Rejection Review</span>
+        <span class="skill-tag">IATF 16949</span>
+        <span class="skill-tag">ISO 9001</span>
+        <span class="skill-tag">VAVE</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Machines</div>
+      <div class="skill-tags">
+        <span class="skill-tag">HMT</span>
+        <span class="skill-tag">Toshiba</span>
+        <span class="skill-tag">Toyo</span>
+        <span class="skill-tag">Bühler</span>
+        <span class="skill-tag">Ital Presse</span>
+        <span class="skill-tag">Frech</span>
+        <span class="skill-tag">Sprayers: Acheson, Wollin, IP</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Software & Tools</div>
+      <div class="skill-tags">
+        <span class="skill-tag">SAP / ERP</span>
+        <span class="skill-tag">MS Office / Excel</span>
+        <span class="skill-tag">Power BI</span>
+        <span class="skill-tag">Creo (PTC)</span>
+        <span class="skill-tag">AutoCAD</span>
+        <span class="skill-tag">MAGMASOFT</span>
+        <span class="skill-tag">FLOW-3D</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Education</div>
+      <div class="skill-tags">
+        <span class="skill-tag">B.E. Mechanical Engineering</span>
+        <span class="skill-tag">CMS College, Coimbatore</span>
+        <span class="skill-tag">Diploma — PSG Polytechnic</span>
+        <span class="skill-tag">2013 – 2023</span>
+        <span class="skill-tag">English · Tamil</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certs">
+  <div class="section-eyebrow">Credentials</div>
+  <h2 class="section-title">Education & Certifications</h2>
+  <div class="certs-grid">
+    <div class="cert-card">
+      <div class="cert-icon">🎓</div>
+      <div>
+        <div class="cert-name">B.E. Mechanical Engineering</div>
+        <div class="cert-org">CMS College of Engineering & Technology, Coimbatore · 2020–2023</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">📐</div>
+      <div>
+        <div class="cert-name">Diploma in Mechanical Engineering</div>
+        <div class="cert-org">PSG Polytechnic College, Coimbatore · 2013–2016</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🤖</div>
+      <div>
+        <div class="cert-name">ABB Robot Programming (RAPID)</div>
+        <div class="cert-org">Industrial experience — IRC5 / FlexPendant · 6+ years</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🟡</div>
+      <div>
+        <div class="cert-name">FANUC Robot Programming (TP / KAREL)</div>
+        <div class="cert-org">Industrial experience — R-30iB / iPendant · HPDC cells</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🏭</div>
+      <div>
+        <div class="cert-name">APQP / PPAP / PFMEA</div>
+        <div class="cert-org">Automotive IATF 16949 quality systems · Tier 1 OEM suppliers</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🔬</div>
+      <div>
+        <div class="cert-name">Casting Simulation</div>
+        <div class="cert-org">MAGMASOFT & FLOW-3D · Process validation and NPD support</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-eyebrow">Get In Touch</div>
+  <h2 class="section-title">Open to HPDC Roles in UK · Europe · USA</h2>
+  <p style="color:var(--cast); max-width:520px; margin:0 auto; font-size:15px; line-height:1.75;">
+    6+ years of HPDC process engineering expertise. Available for senior process engineer, 
+    die casting specialist, or automation engineer roles internationally.
+  </p>
+  <div class="contact-links">
+    <a href="https://www.linkedin.com/in/saaishibi/" target="_blank" class="contact-link contact-link-primary">
+      LinkedIn Profile
+    </a>
+    <a href="mailto:sakthi512628@gmail.com" class="contact-link contact-link-outline">
+      sakthi512628@gmail.com
+    </a>
+    <a href="tel:+919080123023" class="contact-link contact-link-outline">
+      +91 9080 123 023
+    </a>
+  </div>
+</section>
+
+<footer>
+  © 2025 Saai Shibi Inbaraju · HPDC Process Engineer · Coimbatore, India
+</footer>
+
+</body>
+</html>
